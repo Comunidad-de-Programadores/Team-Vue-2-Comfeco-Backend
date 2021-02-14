@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\General\UserRepository;
 use App\Http\Requests\General\RegisterRequest;
 use App\Http\Requests\General\RecoverPasswordRequest;
+use App\Http\Requests\General\CancelRecoverPasswordRequest;
 use App\Http\Requests\General\GeneratePasswordRequest;
 
 class UserController extends Controller
@@ -54,18 +55,19 @@ class UserController extends Controller
         return response()->json($check, 200);
     }
 
-    // public function cancelRecoverPassword()
-    // {
-    //     $check = $this->userRepository->cancelRecoverPassword(request('email'));
-    //     if ($check) {
-    //         $response = [
-    //             'error' => false,
-    //             'message' => 'Recuperación correctamente anulada'
-    //         ];
-    //         return response()->json($response, 200);
-    //     }
-    //     return response()->json($check, 200);
-    // }
+    public function cancelRecoverPassword(CancelRecoverPasswordRequest $request)
+    {
+        $email = decrypt(request('email'));
+        $check = $this->userRepository->cancelRecoverPassword($email);
+        if ($check) {
+            $response = [
+                'error' => false,
+                'message' => 'Recuperación correctamente anulada'
+            ];
+            return response()->json($response, 200);
+        }
+        return response()->json($check, 200);
+    }
 
     public function generatePassword(GeneratePasswordRequest $request)
     {

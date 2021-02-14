@@ -20,6 +20,7 @@ Route::group([
         Route::post('login', [GeneralLogin::class,'login'])->name('login');
         Route::post('register', [GeneralUser::class,'store'])->name('register');
         Route::post('recoverPassword', [GeneralUser::class,'recoverPassword'])->name('recoverPassword');
+        Route::post('cancelRecoverPassword', [GeneralUser::class,'cancelRecoverPassword'])->name('cancelRecoverPassword');
         Route::post('generatePassword', [GeneralUser::class,'generatePassword'])->name('generatePassword');
     });
 });

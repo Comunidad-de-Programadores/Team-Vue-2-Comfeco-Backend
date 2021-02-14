@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Mail;
 use App\Models\User;
 use App\Mail\RecoverPasswordMail;
+use App\Mail\CancelRecoverPasswordMail;
 
 class UserRepository
 {
@@ -39,7 +40,7 @@ class UserRepository
         $linkToRecoverPassword = "http://localhost:3000/recuperarClave?email=" . encrypt($user->email);
         $linkToCancelRecoverPassword = "http://localhost:3000/anularRecuperarClave?email=" . encrypt($user->email);
 
-        Mail::to("ggalvez92@hotmail.com")->queue(new RecoverPasswordMail($linkToRecoverPassword, $linkToCancelRecoverPassword));
+        Mail::to($user->email)->queue(new RecoverPasswordMail($linkToRecoverPassword, $linkToCancelRecoverPassword));
 
         return true;
     }
@@ -56,6 +57,8 @@ class UserRepository
 
         $user->recover_password_flag = false;
         $user->update();
+
+        Mail::to($user->email)->queue(new CancelRecoverPasswordMail());
 
         return true;
     }

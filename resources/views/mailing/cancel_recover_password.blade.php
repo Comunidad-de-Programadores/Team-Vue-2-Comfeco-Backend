@@ -134,34 +134,7 @@
                                     <tr>
                                         <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                             <div style="font-family:helvetica;font-size:18px;line-height:1;text-align:center;color:#521E87;">
-                                                <p>Se ha solicitado una recuperación de contraseña</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                            <div style="font-family:helvetica;font-size:20px;line-height:1;text-align:center;color:#F1B406;"><a href="{{ $linkToRecoverPassword }}" target="_blank" style="color: #F1B406;">Generar nueva contraseña</a></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-size:0px;word-break:break-word;">
-                                            <!--[if mso | IE]>
-    
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td height="100" style="height:100px;">
-      
-        <![endif]-->
-                                            <div style="height:100px;"> &nbsp; </div>
-                                            <!--[if mso | IE]>
-    
-                </td></tr></table>
-      
-        <![endif]-->
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                            <div style="font-family:helvetica;font-size:11px;line-height:1;text-align:center;color:#521E87;">
-                                                <p>Si es que usted no ha solicitado la recuperación, de click <a href="{{ $linkToCancelRecoverPassword }}" target="_blank">aquí</a> </p>
+                                                <p>La solicitud para recuperar la contraseña se ha anulado satisfactoriamente. Gracias.</p>
                                             </div>
                                         </td>
                                     </tr>
