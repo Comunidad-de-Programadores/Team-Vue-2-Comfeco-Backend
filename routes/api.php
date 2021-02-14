@@ -19,5 +19,7 @@ Route::group([
     ], function () {
         Route::post('login', [GeneralLogin::class,'login'])->name('login');
         Route::post('register', [GeneralUser::class,'store'])->name('register');
+        Route::post('recoverPassword', [GeneralUser::class,'recoverPassword'])->name('recoverPassword');
+        Route::post('generatePassword', [GeneralUser::class,'generatePassword'])->name('generatePassword');
     });
 });

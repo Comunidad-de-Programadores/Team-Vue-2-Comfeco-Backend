@@ -25,7 +25,7 @@ class RolesSeeder extends Seeder
             ],
            
             [
-                'name' => 'Clientes',
+                'name' => 'Developers',
                 'code' => '80'
             ]
         ];
