@@ -8,6 +8,14 @@ use Carbon\Carbon;
 
 class UserRepository
 {
+    public function store($data)
+    {
+        $id = isset($data["id"]) ? $data["id"] : null;
+        $model = User::updateOrCreate(['id' => $id], $data);
+
+        return $model;
+    }
+
     public function createToken($user, $rememberMe = false)
     {
         $tokenResult = $user->createToken('Api user token', ['app-client-guest','app-client-logged']);
@@ -23,6 +31,6 @@ class UserRepository
 
     public function generalFields($user)
     {
-        return $user->only(["id", "email", "name", "dni", "avatar" ]);
+        return $user->only(["id", "email", "name", "phone" ]);
     }
 }
