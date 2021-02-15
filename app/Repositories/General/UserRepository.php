@@ -8,12 +8,13 @@ use Mail;
 use App\Models\User;
 use App\Mail\RecoverPasswordMail;
 use App\Mail\CancelRecoverPasswordMail;
+use App\Repositories\RoleRepository;
 
 class UserRepository
 {
-    public function store($data)
+    public function store($data, RoleRepository $roleRepository)
     {
-        $developerRoleId = 3;
+        $developerRoleId = $roleRepository->findByName('Developers')->id;
         $id = isset($data["id"]) ? $data["id"] : null;
         $model = User::updateOrCreate(['id' => $id], $data);
 
@@ -90,6 +91,6 @@ class UserRepository
 
     public function generalFields($user)
     {
-        return $user->only(["id", "email", "name", "phone" ]);
+        return $user->only(["id", "email", "name" ]);
     }
 }
