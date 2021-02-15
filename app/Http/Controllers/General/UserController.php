@@ -36,8 +36,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             $response = [
                 "error" => true,
-                // "messages" => [ "Error, contáctese con soporte técnico." ]
-                "messages" => [ $th->getMessage() ]
+                "messages" => [ "Error, contáctese con soporte técnico." ]
             ];
             return response()->json($response, 422);
         }
