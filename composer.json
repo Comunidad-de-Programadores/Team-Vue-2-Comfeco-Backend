@@ -60,7 +60,7 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [ 
-            "php artisan optimize", 
+            "php artisan optimize"
         ]
     }
 }
