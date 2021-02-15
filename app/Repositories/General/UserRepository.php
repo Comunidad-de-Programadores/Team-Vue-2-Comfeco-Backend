@@ -14,7 +14,7 @@ class UserRepository
 {
     public function store($data)
     {
-        $roleRepository = app('App\Repositories\RoleRepository');
+        $roleRepository = app('App\Repositories\General\RoleRepository');
         $developerRoleId = $roleRepository->findByName('Developers')->id;
         $id = isset($data["id"]) ? $data["id"] : null;
         $model = User::updateOrCreate(['id' => $id], $data);
