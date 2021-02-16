@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -31,6 +32,9 @@ class AuthServiceProvider extends ServiceProvider
             'app-client-logged' => 'Para que los usuarios puedan consumir cuando ya se logearon'
         ]);
 
-        Passport::routes();
+        Route::prefix('api')->group(function () {
+            Passport::routes();
+        });
+        // Passport::routes();
     }
 }
