@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /***** GENERAL ******/
 use App\Http\Controllers\General\LoginController as GeneralLogin;
+use App\Http\Controllers\General\SocialLoginController as GeneralSocialLogin;
 use App\Http\Controllers\General\UserController as GeneralUser;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -19,6 +20,7 @@ Route::group([
     ], function () {
         Route::post('login', [GeneralLogin::class,'login'])->name('login');
         Route::post('register', [GeneralUser::class,'store'])->name('register');
+        Route::post('socialLogin', [GeneralSocialLogin::class,'login'])->name('socialLogin');
         Route::post('recoverPassword', [GeneralUser::class,'recoverPassword'])->name('recoverPassword');
         Route::post('cancelRecoverPassword', [GeneralUser::class,'cancelRecoverPassword'])->name('cancelRecoverPassword');
         Route::post('generatePassword', [GeneralUser::class,'generatePassword'])->name('generatePassword');

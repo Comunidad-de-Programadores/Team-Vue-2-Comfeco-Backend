@@ -26,6 +26,8 @@ class UserRepository
         return $model;
     }
 
+ 
+
     public function recoverPassword($email)
     {
         $user = User::where('email', $email)->first();
@@ -93,5 +95,10 @@ class UserRepository
     public function generalFields($user)
     {
         return $user->only(["id", "email", "name" ]);
+    }
+
+    public function searchByEmail($email)
+    {
+        return User::whereEmail($email)->first();
     }
 }
