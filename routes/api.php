@@ -22,6 +22,7 @@ Route::group([
         Route::post('register', [GeneralUser::class,'store'])->name('register');
         Route::post('socialLogin', [GeneralSocialLogin::class,'login'])->name('socialLogin');
         Route::post('recoverPassword', [GeneralUser::class,'recoverPassword'])->name('recoverPassword');
+        Route::get('validateRecoverPasswordExpiration', [GeneralUser::class,'validateRecoverPasswordExpiration'])->name('validateRecoverPasswordExpiration');
         Route::post('cancelRecoverPassword', [GeneralUser::class,'cancelRecoverPassword'])->name('cancelRecoverPassword');
         Route::post('generatePassword', [GeneralUser::class,'generatePassword'])->name('generatePassword');
     });

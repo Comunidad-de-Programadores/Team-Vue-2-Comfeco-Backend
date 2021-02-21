@@ -55,6 +55,14 @@ class UserController extends Controller
         return response()->json($check, 200);
     }
 
+    public function validateRecoverPasswordExpiration(CancelRecoverPasswordRequest $request)
+    {
+        $email = decrypt(request('email'));
+        $expirationValidation = $this->userRepository->validateRecoverPasswordExpiration($email);
+
+        return response()->json($expirationValidation, 200);
+    }
+
     public function cancelRecoverPassword(CancelRecoverPasswordRequest $request)
     {
         $email = decrypt(request('email'));

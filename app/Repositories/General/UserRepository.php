@@ -26,8 +26,6 @@ class UserRepository
         return $model;
     }
 
- 
-
     public function recoverPassword($email)
     {
         $user = User::where('email', $email)->first();
@@ -39,6 +37,7 @@ class UserRepository
         }
 
         $user->recover_password_flag = true;
+        $user->recover_expiration_time = date("Y-m-d H:i:s", strtotime('+24 hours'));
         $user->update();
 
         $linkToRecoverPassword = "http://localhost:3000/recuperarClave?email=" . encrypt($user->email);
@@ -47,6 +46,26 @@ class UserRepository
         Mail::to($user->email)->queue(new RecoverPasswordMail($linkToRecoverPassword, $linkToCancelRecoverPassword));
 
         return true;
+    }
+
+    public function validateRecoverPasswordExpiration($email)
+    {
+        $user = User::where('email', $email)->first();
+        if (is_null($user)) {
+            return [
+                "error" => true,
+                "message" => "Este correo no está registrado"
+            ];
+        }
+
+        $expiration_time = strtotime($user->recover_expiration_time);
+        $current_time = time();
+        $expirationFlag = $current_time <= $expiration_time;
+
+        return [
+            "error" => !$expirationFlag,
+            "message" => $expirationFlag ? 'Válido' : 'Inválido'
+        ];
     }
 
     public function cancelRecoverPassword($email)
