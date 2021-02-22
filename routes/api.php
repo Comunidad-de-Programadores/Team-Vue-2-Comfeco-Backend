@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\General\LoginController as GeneralLogin;
 use App\Http\Controllers\General\SocialLoginController as GeneralSocialLogin;
 use App\Http\Controllers\General\UserController as GeneralUser;
+use App\Http\Controllers\General\SponsorController as GeneralSponsor;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -25,5 +26,8 @@ Route::group([
         Route::get('validateRecoverPasswordExpiration', [GeneralUser::class,'validateRecoverPasswordExpiration'])->name('validateRecoverPasswordExpiration');
         Route::post('cancelRecoverPassword', [GeneralUser::class,'cancelRecoverPassword'])->name('cancelRecoverPassword');
         Route::post('generatePassword', [GeneralUser::class,'generatePassword'])->name('generatePassword');
+
+
+        Route::get('sponsors', [GeneralSponsor::class,'list'])->name('sponsors.list');
     });
 });
