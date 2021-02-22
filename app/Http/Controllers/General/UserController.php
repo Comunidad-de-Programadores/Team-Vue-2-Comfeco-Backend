@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function store(RegisterRequest $request)
     {
-        $fields = request(['name','email','password','phone']);
+        $fields = request(['name','email','password']);
         
         try {
             $user = $this->userRepository->store($fields);
