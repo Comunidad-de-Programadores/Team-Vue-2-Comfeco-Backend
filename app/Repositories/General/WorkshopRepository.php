@@ -8,11 +8,9 @@ class WorkshopRepository
 {
     public function list($search)
     {
-
-        $workshops = Workshop::where('area', 'like', '%' . $search . '%')->paginate(5);
-
+        $perPage = 5;
+        $workshops = Workshop::where('area', 'like', '%' . $search . '%')->paginate($perPage);
         $workshops->appends(['name' => $search]);
-        
         return $workshops;
     }
 }
