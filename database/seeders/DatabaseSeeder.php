@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SponsorsSeeder::class);
         $this->call(WorkshopSeeder::class);
         $this->call(CommunitiesSeeder::class);
+        $this->call(MentorsSeeder::class);
     }
 }
