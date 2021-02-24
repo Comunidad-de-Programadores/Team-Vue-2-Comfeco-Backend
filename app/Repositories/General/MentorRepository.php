@@ -15,16 +15,16 @@ class MentorRepository
                     'id', 
                     'name', 
                     'master_on', 
-                    "CASE WHEN master_on_image IS NULL 
+                    DB::raw("CASE WHEN master_on_image IS NULL 
                         THEN ''
                     ELSE
-                        CONCAT(@assetUrl,'/',master_on_image)
-                    END as master_on_image", 
-                    "CASE WHEN image_url IS NULL 
+                        CONCAT(@assetUrl,master_on_image)
+                    END as master_on_image"),
+                    DB::raw("CASE WHEN image_url IS NULL 
                         THEN ''
                     ELSE
-                        CONCAT(@assetUrl,'/',image_url)
-                    END as image_url", 
+                        CONCAT(@assetUrl,image_url)
+                    END as image_url"),
                     'order'
                 )->orderBy('order')
                 ->get();
