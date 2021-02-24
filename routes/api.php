@@ -8,6 +8,8 @@ use App\Http\Controllers\General\SocialLoginController as GeneralSocialLogin;
 use App\Http\Controllers\General\UserController as GeneralUser;
 use App\Http\Controllers\General\SponsorController as GeneralSponsor;
 use App\Http\Controllers\General\WorkshopController as GeneralWorkshop;
+use App\Http\Controllers\General\CommunityController as GeneralCommunity;
+use App\Http\Controllers\General\MentorController as GeneralMentor;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -31,5 +33,7 @@ Route::group([
 
         Route::get('sponsors', [GeneralSponsor::class,'list'])->name('sponsors.list');
         Route::get('workshops', [GeneralWorkshop::class,'list'])->name('workshops.list');
+        Route::get('communities', [GeneralCommunity::class,'list'])->name('communities.list');
+        Route::get('mentors', [GeneralMentor::class,'list'])->name('mentors.list');
     });
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkshopsTable extends Migration
+class CreateMentorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateWorkshopsTable extends Migration
      */
     public function up()
     {
-        Schema::create('workshops', function (Blueprint $table) {
+        Schema::create('mentors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('url_social')->nullable();
-            $table->string('name_user')->nullable();
-            $table->tinyInteger('area')->default(0);
+            $table->string('master_on')->nullable();
+            $table->string('master_on_image')->nullable();
+            $table->string('image_url')->nullable();
             $table->tinyInteger('order')->default(0);
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +32,6 @@ class CreateWorkshopsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workshops');
+        Schema::dropIfExists('mentors');
     }
 }
