@@ -40,6 +40,6 @@ class GeneratePasswordRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             "error" => true,
             "errors" =>$validator->errors()
-        ], 422));
+        ], 200));
     }
 }

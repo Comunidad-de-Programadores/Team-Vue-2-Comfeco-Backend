@@ -54,7 +54,7 @@ class UserRepository
         if (is_null($user)) {
             return [
                 "error" => true,
-                "message" => "Este correo no está registrado"
+                "errors" => "Este correo no está registrado"
             ];
         }
 
@@ -64,7 +64,7 @@ class UserRepository
 
         return [
             "error" => !$expirationFlag,
-            "message" => $expirationFlag ? 'Válido' : 'Inválido'
+            "errors" => $expirationFlag ? 'Válido' : 'Inválido'
         ];
     }
 
@@ -74,7 +74,7 @@ class UserRepository
         if (is_null($user)) {
             return [
                 "error" => true,
-                "message" => "Este correo no está registrado"
+                "errors" => "Este correo no está registrado"
             ];
         }
 
