@@ -40,8 +40,8 @@ class UserRepository
         $user->recover_expiration_time = date("Y-m-d H:i:s", strtotime('+24 hours'));
         $user->update();
 
-        $linkToRecoverPassword = "http://localhost:3000/recuperarClave?email=" . encrypt($user->email);
-        $linkToCancelRecoverPassword = "http://localhost:3000/anularRecuperarClave?email=" . encrypt($user->email);
+        $linkToRecoverPassword = "https://comfeco.tk/recuperarClave?email=" . encrypt($user->email);
+        $linkToCancelRecoverPassword = "https://comfeco.tk/anularRecuperarClave?email=" . encrypt($user->email);
 
         Mail::to($user->email)->queue(new RecoverPasswordMail($linkToRecoverPassword, $linkToCancelRecoverPassword));
 
