@@ -38,7 +38,7 @@ class UserController extends Controller
                 "error" => true,
                 "messages" => [ "Error, contáctese con soporte técnico." ]
             ];
-            return response()->json($response, 422);
+            return response()->json($response, 200);
         }
     }
 

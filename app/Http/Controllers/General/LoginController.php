@@ -18,9 +18,9 @@ class LoginController extends Controller
         if (!Auth::attempt($credentials)) {
             $response = [
                 "error" => true,
-                "messages" => [ "Clave o correo erróneos" ]
+                "errors" => [ "Clave o correo erróneos" ]
             ];
-            return response()->json($response, 422);
+            return response()->json($response, 200);
         }
       
         $user = request()->user();
