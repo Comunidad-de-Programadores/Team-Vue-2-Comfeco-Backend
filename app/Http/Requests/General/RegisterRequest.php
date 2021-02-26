@@ -2,15 +2,29 @@
 
 namespace App\Http\Requests\General;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 
 class RegisterRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        $user = User::where(
+            'email', $this->input('email')
+        )
+            ->first();
+
+        if($user) {
+            throw new HttpResponseException(response()->json([
+                "error" => true,
+                "errors" => [
+                    'Email already exists'
+                ]
+            ], 200));
+        }
     }
 
     public function rules()
