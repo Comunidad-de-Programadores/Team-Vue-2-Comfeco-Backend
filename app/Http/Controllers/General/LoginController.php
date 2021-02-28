@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\General;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CustomController;
 use Illuminate\Http\Request;
-use App\Http\Requests\General\LoginRequest;
 use Auth;
 use Carbon\Carbon;
+use App\Http\Requests\General\LoginRequest;
 use App\Repositories\General\UserRepository;
 
-class LoginController extends Controller
+class LoginController extends CustomController
 {
     public function login(LoginRequest $request, UserRepository $userRepository)
     {
@@ -18,9 +18,9 @@ class LoginController extends Controller
         if (!Auth::attempt($credentials)) {
             $response = [
                 "error" => true,
-                "errors" => [ "Clave o correo erróneos" ]
+                "messages" => [ "Clave o correo erróneos" ]
             ];
-            return response()->json($response, 200);
+            return response()->json($response, $this->errorStatus);
         }
       
         $user = request()->user();
@@ -35,6 +35,6 @@ class LoginController extends Controller
             "user" => $userFormatted
         ];
             
-        return response()->json($response, 200);
+        return response()->json($response, $this->successStatus);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\General;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\General\SocialLoginRequest;
+use App\Http\Controllers\CustomController;
 use Illuminate\Http\Request;
+use App\Http\Requests\General\SocialLoginRequest;
 use App\Repositories\General\UserRepository;
 use App\Repositories\General\UserSocialNetworkRepository;
 
-class SocialLoginController extends Controller
+class SocialLoginController extends CustomController
 {
     public function login(SocialLoginRequest $request, UserRepository $userRepository, UserSocialNetworkRepository $userSocialRepository)
     {
@@ -26,6 +26,6 @@ class SocialLoginController extends Controller
             "user" => $userFormatted
         ];
 
-        return response($response, 200);
+        return response($response, $this->successStatus);
     }
 }

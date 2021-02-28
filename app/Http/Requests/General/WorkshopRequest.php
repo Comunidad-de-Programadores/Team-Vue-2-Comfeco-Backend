@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\General;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\CustomFormRequest;
 
-class WorkshopRequest extends FormRequest
+class WorkshopRequest extends CustomFormRequest
 {
     public function authorize()
     {
@@ -25,13 +23,5 @@ class WorkshopRequest extends FormRequest
         return [
             'area.string' => 'Escriba un nombre válido',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            "error" => true,
-            "errors" => $validator->errors()
-        ], 200));
     }
 }

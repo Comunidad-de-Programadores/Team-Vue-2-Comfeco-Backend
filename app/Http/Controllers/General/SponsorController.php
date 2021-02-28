@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\General;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CustomController;
 use Illuminate\Http\Request;
 use App\Repositories\General\SponsorRepository;
 
-class SponsorController extends Controller
+class SponsorController extends CustomController
 {
     protected $sponsorRepository;
 
     public function __construct(SponsorRepository $sponsorRepository)
     {
+        parent::__construct();
         $this->sponsorRepository = $sponsorRepository;
     }
 
     public function list()
     {
         $records = $this->sponsorRepository->list();
-
-        return response()->json(['records' => $records], 200);
+        return response()->json(['records' => $records], $this->successStatus);
     }
 }

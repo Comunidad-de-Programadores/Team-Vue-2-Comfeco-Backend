@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\General;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CustomController;
 use Illuminate\Http\Request;
 use App\Repositories\General\UserRepository;
 use App\Http\Requests\General\RegisterRequest;
@@ -10,12 +10,13 @@ use App\Http\Requests\General\RecoverPasswordRequest;
 use App\Http\Requests\General\CancelRecoverPasswordRequest;
 use App\Http\Requests\General\GeneratePasswordRequest;
 
-class UserController extends Controller
+class UserController extends CustomController
 {
     protected $userRepository;
     
     public function __construct(UserRepository $userRepository)
     {
+        parent::__construct();
         $this->userRepository = $userRepository;
     }
 
@@ -32,13 +33,13 @@ class UserController extends Controller
                 "error" => false,
                 "user" => $userFormatted
             ];
-            return response()->json($response, 200);
+            return response()->json($response, $this->successStatus);
         } catch (\Throwable $th) {
             $response = [
                 "error" => true,
                 "messages" => [ "Error, contáctese con soporte técnico." ]
             ];
-            return response()->json($response, 200);
+            return response()->json($response, $this->errorStatus);
         }
     }
 
@@ -50,9 +51,10 @@ class UserController extends Controller
                 'error' => false,
                 'message' => 'Se enviará un correo para que pueda recuperar la contraseña'
             ];
-            return response()->json($response, 200);
+            return response()->json($response, $this->successStatus);
         }
-        return response()->json($check, 200);
+
+        return response()->json($check, $this->errorStatus);
     }
 
     public function validateRecoverPasswordExpiration(CancelRecoverPasswordRequest $request)
@@ -60,7 +62,7 @@ class UserController extends Controller
         $email = decrypt(request('email'));
         $expirationValidation = $this->userRepository->validateRecoverPasswordExpiration($email);
 
-        return response()->json($expirationValidation, 200);
+        return response()->json($expirationValidation, $this->successStatus);
     }
 
     public function cancelRecoverPassword(CancelRecoverPasswordRequest $request)
@@ -72,9 +74,9 @@ class UserController extends Controller
                 'error' => false,
                 'message' => 'Recuperación correctamente anulada'
             ];
-            return response()->json($response, 200);
+            return response()->json($response, $this->successStatus);
         }
-        return response()->json($check, 200);
+        return response()->json($check, $this->errorStatus);
     }
 
     public function generatePassword(GeneratePasswordRequest $request)
@@ -86,6 +88,6 @@ class UserController extends Controller
             'error' => false,
             'message' => 'Clave actualizada correctamente'
         ];
-        return response()->json($response, 200);
+        return response()->json($response, $this->successStatus);
     }
 }

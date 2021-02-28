@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\General;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\CustomFormRequest;
 
-class SocialLoginRequest extends FormRequest
+class SocialLoginRequest extends CustomFormRequest
 {
     public function authorize()
     {
@@ -30,13 +28,5 @@ class SocialLoginRequest extends FormRequest
             'provider.required' => 'La red social es obligatoria',
             'id.required' => 'La red social es obligatoria',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            "error" => true,
-            "errors" =>$validator->errors()
-        ], 200));
     }
 }

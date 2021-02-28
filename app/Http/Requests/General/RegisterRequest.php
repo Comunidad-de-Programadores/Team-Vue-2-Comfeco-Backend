@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\General;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\CustomFormRequest;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends CustomFormRequest
 {
     public function authorize()
     {
@@ -40,13 +38,5 @@ class RegisterRequest extends FormRequest
             'password_confirmation.required' => 'La confirmación de clave es obligatoria',
             'password_confirmation.min' => 'Escriba al menos :min caracteres',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            "error" => true,
-            "errors" => $validator->errors()
-        ], 200));
     }
 }
