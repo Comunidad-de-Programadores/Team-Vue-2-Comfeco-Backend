@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\General;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\CustomFormRequest;
 
-class LoginRequest extends FormRequest
+class LoginRequest extends CustomFormRequest
 {
     public function authorize()
     {
@@ -29,13 +27,5 @@ class LoginRequest extends FormRequest
             'email.max' => 'Escriba máximo 100 caracteres',
             'password.required' => 'La clave es obligatoria',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            "error" => true,
-            "errors" =>$validator->errors()
-        ], 200));
     }
 }
