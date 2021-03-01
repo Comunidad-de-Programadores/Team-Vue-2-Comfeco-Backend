@@ -9,6 +9,7 @@ use App\Http\Requests\General\RegisterRequest;
 use App\Http\Requests\General\RecoverPasswordRequest;
 use App\Http\Requests\General\CancelRecoverPasswordRequest;
 use App\Http\Requests\General\GeneratePasswordRequest;
+use App\Http\Requests\General\UpdateProfileRequest;
 
 class UserController extends CustomController
 {
@@ -22,7 +23,7 @@ class UserController extends CustomController
 
     public function store(RegisterRequest $request)
     {
-        $fields = request(['name','email','password']);
+        $fields = request(['name','email','password','nickname']);
         
         try {
             $user = $this->userRepository->store($fields);
@@ -88,6 +89,26 @@ class UserController extends CustomController
             'error' => false,
             'message' => 'Clave actualizada correctamente'
         ];
+        return response()->json($response, $this->successStatus);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        $data = request()->all();
+        $user = request()->user();
+        $response = [
+            'error' => false,
+            'message' => ''
+        ];
+        try {
+            $userData = $this->userRepository->updateProfile($user, $data);
+            $response['message'] = 'Perfil actualizado correctamente';
+            $response['data'] = $userData;
+        } catch (\Throwable $th) {
+            $response['error'] = true;
+            $response['message'] = $th->getMessage();
+        }
+
         return response()->json($response, $this->successStatus);
     }
 }

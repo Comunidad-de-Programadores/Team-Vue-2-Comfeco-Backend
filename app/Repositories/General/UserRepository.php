@@ -9,9 +9,12 @@ use App\Models\User;
 use App\Mail\RecoverPasswordMail;
 use App\Mail\CancelRecoverPasswordMail;
 use App\Repositories\RoleRepository;
+use App\Traits\FileMethods;
 
 class UserRepository
 {
+    use FileMethods;
+
     public function store($data)
     {
         $roleRepository = app('App\Repositories\General\RoleRepository');
@@ -24,6 +27,30 @@ class UserRepository
         }
 
         return $model;
+    }
+
+    public function updateProfile($user, $data)
+    {
+        if (isset($data['birthday']) && !is_null($data["birthday"])) {
+            $data['birthday'] = date('Y-m-d', strtotime(\str_replace('/', '-', $data["birthday"])));
+        }
+
+        if (isset($data['avatar']) && !is_null($data["avatar"])) {
+            $file = $data['avatar'];
+            if (strpos($file, 'base64') !== false) {
+                @list($type, $file) = explode(';', $file);
+                @list(, $file) = explode(',', $file);
+                if ($file) {
+                    $file = base64_decode($file);
+                    $this->manageFile64($user, $file, 'avatar', 'public', 'users');
+                }
+            }
+            unset($data['avatar']);
+        }
+
+        $user->update($data);
+
+        return $this->generalFields($user);
     }
 
     public function recoverPassword($email)
@@ -113,7 +140,25 @@ class UserRepository
 
     public function generalFields($user)
     {
-        return $user->only(["id", "email", "name", "nickname", "avatar" ]);
+        $auxUser = $user->only([
+            "id",
+            "email",
+            "name",
+            "nickname",
+            "avatar",
+            "birthday",
+            "genre",
+            "country_id",
+            "area_id",
+            "facebook_url",
+            "github_url",
+            "twitter_url",
+            "linkedin_url",
+        ]);
+
+        $auxUser['avatar'] = strpos($auxUser['avatar'], 'users/') !== false ? asset('storage/'. $auxUser['avatar']) : $auxUser['avatar'] ;
+
+        return $auxUser;
     }
 
     public function searchByEmail($email)

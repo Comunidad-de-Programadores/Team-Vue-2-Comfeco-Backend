@@ -30,11 +30,16 @@ Route::group([
         Route::post('cancelRecoverPassword', [GeneralUser::class,'cancelRecoverPassword'])->name('cancelRecoverPassword');
         Route::post('generatePassword', [GeneralUser::class,'generatePassword'])->name('generatePassword');
 
-
         Route::get('sponsors', [GeneralSponsor::class,'list'])->name('sponsors.list');
         Route::get('workshops', [GeneralWorkshop::class,'list'])->name('workshops.list');
         Route::get('communities', [GeneralCommunity::class,'list'])->name('communities.list');
         Route::get('communities/{id}', [GeneralCommunity::class,'detail'])->name('communities.detail');
         Route::get('mentors', [GeneralMentor::class,'list'])->name('mentors.list');
+    });
+
+    Route::group([
+        'middleware' => ['auth:api'],
+    ], function () {
+        Route::put('update-profile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
     });
 });
