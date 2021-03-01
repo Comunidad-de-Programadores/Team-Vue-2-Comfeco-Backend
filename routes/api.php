@@ -34,6 +34,7 @@ Route::group([
         Route::get('sponsors', [GeneralSponsor::class,'list'])->name('sponsors.list');
         Route::get('workshops', [GeneralWorkshop::class,'list'])->name('workshops.list');
         Route::get('communities', [GeneralCommunity::class,'list'])->name('communities.list');
+        Route::get('communities/{id}', [GeneralCommunity::class,'detail'])->name('communities.detail');
         Route::get('mentors', [GeneralMentor::class,'list'])->name('mentors.list');
     });
 });

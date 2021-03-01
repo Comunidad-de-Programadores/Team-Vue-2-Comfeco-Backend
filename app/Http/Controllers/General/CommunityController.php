@@ -21,4 +21,10 @@ class CommunityController extends CustomController
         $records = $this->communityRepository->list();
         return response()->json(['records' => $records], $this->successStatus);
     }
+
+    public function detail()
+    {
+        $detail = $this->communityRepository->findById(request('id'));
+        return response()->json(['data' => $detail], $this->successStatus);
+    }
 }

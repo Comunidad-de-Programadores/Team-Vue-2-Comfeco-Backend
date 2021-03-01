@@ -12,4 +12,13 @@ class CommunityRepository
 
         return $records;
     }
+
+    public function findById($id)
+    {
+        $detail = Community::where('id', $id)
+                        ->select('id', 'name', 'slug', 'order')
+                        ->first();
+                        
+        return $detail;
+    }
 }
