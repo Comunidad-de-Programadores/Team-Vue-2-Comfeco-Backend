@@ -106,8 +106,9 @@ class UserController extends CustomController
             'github_url',
             'twitter_url',
             'linkedin_url',
+            'password'
         ]);
-        
+
         $user = request()->user();
         $response = [
             'error' => false,
