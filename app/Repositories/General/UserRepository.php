@@ -113,7 +113,7 @@ class UserRepository
 
     public function generalFields($user)
     {
-        return $user->only(["id", "email", "name" ]);
+        return $user->only(["id", "email", "name", "nickname", "avatar" ]);
     }
 
     public function searchByEmail($email)

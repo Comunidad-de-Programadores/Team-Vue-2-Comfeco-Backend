@@ -36,25 +36,26 @@ class UserSocialNetworkRepository
         return $model;
     }
 
-    public function manageSocialObj($social_user)
+    public function manageSocialObj($socialUser)
     {
         $userRepository = app('App\Repositories\General\UserRepository');
-        $user = $userRepository->searchByEmail($social_user->email);
-        $avatar = isset($social_user->avatar) ? $social_user->avatar : null;
+        $user = $userRepository->searchByEmail($socialUser->email);
+        $avatar = isset($socialUser->avatar) ? $socialUser->avatar : null;
         $userFields = [
-            'email' => $social_user->email,
-            'name' => $social_user->name,
+            'email' => $socialUser->email,
+            'name' => $socialUser->name,
+            'avatar' => isset($socialUser->avatar_original) ? $socialUser->avatar_original : $avatar
         ];
         $socialiteFields = [
             'user_id' => null,
-            'provider' => $social_user->provider,
-            'provider_id' => $social_user->id,
-            'expires_in' => $social_user->expiresIn,
-            'token' => $social_user->token,
-            'refresh_token' => isset($social_user->refresh_token) ? $social_user->refresh_token : '',
+            'provider' => $socialUser->provider,
+            'provider_id' => $socialUser->id,
+            'expires_in' => $socialUser->expiresIn,
+            'token' => $socialUser->token,
+            'refresh_token' => isset($socialUser->refresh_token) ? $socialUser->refresh_token : '',
             'avatar_normal' => $avatar,
-            'avatar_original' => isset($social_user->avatar_original) ? $social_user->avatar_original : $avatar,
-            'verified_email' => isset($social_user->user["verified_email"]) ? $social_user->user["verified_email"] : 0,
+            'avatar_original' => isset($socialUser->avatar_original) ? $socialUser->avatar_original : $avatar,
+            'verified_email' => isset($socialUser->user["verified_email"]) ? $socialUser->user["verified_email"] : 0,
         ];
         if (is_null($user)) {
             $user = $userRepository->store($userFields);
