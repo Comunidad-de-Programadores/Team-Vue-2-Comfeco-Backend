@@ -94,7 +94,20 @@ class UserController extends CustomController
 
     public function updateProfile(UpdateProfileRequest $request)
     {
-        $data = request()->all();
+        $data = request()->only([
+            'name',
+            'nickname',
+            'avatar',
+            'birthday',
+            'genre',
+            'country_id',
+            'area_id',
+            'facebook_url',
+            'github_url',
+            'twitter_url',
+            'linkedin_url',
+        ]);
+        
         $user = request()->user();
         $response = [
             'error' => false,
