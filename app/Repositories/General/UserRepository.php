@@ -44,8 +44,8 @@ class UserRepository
                     $file = base64_decode($file);
                     $this->manageFile64($user, $file, 'avatar', 'public', 'users');
                 }
+                unset($data['avatar']);
             }
-            unset($data['avatar']);
         }
 
         $user->update($data);

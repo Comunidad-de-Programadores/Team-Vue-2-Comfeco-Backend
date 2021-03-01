@@ -16,7 +16,7 @@ class AddFieldsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('nickname')->nullable()->after('email');
             $table->date('birthday')->nullable()->after('email');
-            $table->string('avatar')->nullable()->after('email');
+            $table->longText('avatar')->nullable()->after('email');
             $table->foreignId('country_id')->nullable()->constrained();
             $table->foreignId('area_id')->nullable()->constrained();
             $table->string('genre')->nullable()->after('email');
