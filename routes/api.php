@@ -40,6 +40,6 @@ Route::group([
     Route::group([
         'middleware' => ['auth:api'],
     ], function () {
-        Route::put('update-profile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
+        Route::put('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
     });
 });
