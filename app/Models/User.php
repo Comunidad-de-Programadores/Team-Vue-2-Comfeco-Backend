@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Badge::class);
     }
+
+    public function comfecoEvents()
+    {
+        return $this->belongsToMany(ComfecoEvent::class);
+    }
 }

@@ -20,9 +20,13 @@ class CreateComfecoEventsTable extends Migration
             $table->string('background_image_url')->nullable();
             $table->dateTime('start')->nullable();
             $table->dateTime('end')->nullable();
-            $table->tinyInteger('order')->default(0);
-            $table->boolean('is_visible')->default(false);
             $table->longText('content')->nullable();
+            $table->integer('participants')->nullable();
+            $table->integer('participants_signed')->default(0);
+            $table->longText('meeting_url')->nullable();
+            $table->longText('external_url')->nullable();
+            $table->boolean('is_visible')->default(false);
+            $table->tinyInteger('order')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

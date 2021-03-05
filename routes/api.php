@@ -11,6 +11,7 @@ use App\Http\Controllers\General\WorkshopController as GeneralWorkshop;
 use App\Http\Controllers\General\CommunityController as GeneralCommunity;
 use App\Http\Controllers\General\MentorController as GeneralMentor;
 use App\Http\Controllers\General\BadgeUserController as GeneralBadgeUser;
+use App\Http\Controllers\General\ComfecoEventController as GeneralComfecoEvent;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -44,5 +45,11 @@ Route::group([
         Route::put('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
 
         Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
+        Route::get('comfecoEvents', [GeneralComfecoEvent::class,'list'])->name('comfecoEvents.list');
+        Route::get('comfecoEvents/{comfecoEventId}', [GeneralComfecoEvent::class,'detail'])->name('comfecoEvents.detail');
+        Route::put('comfecoEvents/{comfecoEventId}/assign', [GeneralComfecoEvent::class,'attachToUser'])->name('comfecoEvents.attach');
+        Route::put('comfecoEvents/{comfecoEventId}/unassign', [GeneralComfecoEvent::class,'detachToUser'])->name('comfecoEvents.detach');
+        Route::get('users/comfecoEvents', [GeneralComfecoEvent::class,'listByUser'])->name('users.comfecoEvents');
+        // Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
     });
 });
