@@ -10,6 +10,7 @@ use App\Http\Controllers\General\SponsorController as GeneralSponsor;
 use App\Http\Controllers\General\WorkshopController as GeneralWorkshop;
 use App\Http\Controllers\General\CommunityController as GeneralCommunity;
 use App\Http\Controllers\General\MentorController as GeneralMentor;
+use App\Http\Controllers\General\BadgeUserController as GeneralBadgeUser;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -41,5 +42,7 @@ Route::group([
         'middleware' => ['auth:api'],
     ], function () {
         Route::put('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
+
+        Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
     });
 });
