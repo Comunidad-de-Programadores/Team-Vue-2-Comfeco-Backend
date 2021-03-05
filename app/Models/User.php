@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(ComfecoEvent::class);
     }
+
+    public function userActivities()
+    {
+        return $this->hasMany(UserActivity::class);
+    }
 }
