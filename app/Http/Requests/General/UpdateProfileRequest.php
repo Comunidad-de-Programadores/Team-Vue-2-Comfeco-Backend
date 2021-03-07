@@ -34,4 +34,6 @@ class UpdateProfileRequest extends CustomFormRequest
             'birthday.date_format' => 'Debe escribir el siguiente formato :format'
         ];
     }
+    
+    
 }

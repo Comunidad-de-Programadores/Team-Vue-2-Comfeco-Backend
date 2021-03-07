@@ -4,7 +4,7 @@ namespace App\Repositories\General;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Mail\RecoverPasswordMail;
 use App\Mail\CancelRecoverPasswordMail;

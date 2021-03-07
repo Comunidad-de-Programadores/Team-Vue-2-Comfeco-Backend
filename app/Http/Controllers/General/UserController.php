@@ -14,7 +14,7 @@ use App\Http\Requests\General\UpdateProfileRequest;
 class UserController extends CustomController
 {
     protected $userRepository;
-    
+
     public function __construct(UserRepository $userRepository)
     {
         parent::__construct();
@@ -24,7 +24,7 @@ class UserController extends CustomController
     public function store(RegisterRequest $request)
     {
         $fields = request(['name','email','password','nickname']);
-        
+
         try {
             $user = $this->userRepository->store($fields);
             $token = $this->userRepository->createToken($user);
@@ -110,10 +110,12 @@ class UserController extends CustomController
         ]);
 
         $user = request()->user();
+
         $response = [
             'error' => false,
             'message' => ''
         ];
+        
         try {
             $userData = $this->userRepository->updateProfile($user, $data);
             $response['message'] = 'Perfil actualizado correctamente';
@@ -123,6 +125,6 @@ class UserController extends CustomController
             $response['message'] = $th->getMessage();
         }
 
-        return response()->json($response, $this->successStatus);
+        return response()->json($response, $response['error'] ? $this->successStatus : $this->errorStatus);
     }
 }

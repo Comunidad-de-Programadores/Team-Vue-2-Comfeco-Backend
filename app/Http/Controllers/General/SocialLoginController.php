@@ -12,7 +12,7 @@ class SocialLoginController extends CustomController
 {
     public function login(SocialLoginRequest $request, UserRepository $userRepository, UserSocialNetworkRepository $userSocialRepository)
     {
-        $social_user = (object)request()->all();
+        $social_user = (object) request()->all();
        
         $user = $userSocialRepository->manageSocialObj($social_user);
         $token = $userRepository->createToken($user);
