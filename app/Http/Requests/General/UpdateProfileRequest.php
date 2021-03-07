@@ -17,7 +17,8 @@ class UpdateProfileRequest extends CustomFormRequest
             'email' => 'string|email|max:100',
             'password'=> 'required_with:password_confirmation|min:6',
             'password_confirmation'=> 'required_with:password|same:password|min:6',
-            'birthday' => 'date_format:d/m/Y'
+            'birthday' => 'date_format:d/m/Y',
+            'biography' => 'max:140'
         ];
     }
 
@@ -31,7 +32,8 @@ class UpdateProfileRequest extends CustomFormRequest
             'password_confirmation.required_with' => 'La clave es obligatoria si es que desea actualizarla',
             'password_confirmation.same' => 'Debe ser igual que la clave',
             'password_confirmation.min' => 'Escriba al menos :min caracteres',
-            'birthday.date_format' => 'Debe escribir el siguiente formato :format'
+            'birthday.date_format' => 'Debe escribir el siguiente formato :format',
+            'biography.max' => 'Máximo son :max caracteres'
         ];
     }
     

@@ -53,4 +53,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Country::class);
     }
+        
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class);
+    }
+
+    public function comfecoEvents()
+    {
+        return $this->belongsToMany(ComfecoEvent::class);
+    }
+
+    public function userActivities()
+    {
+        return $this->hasMany(UserActivity::class);
+    }
 }

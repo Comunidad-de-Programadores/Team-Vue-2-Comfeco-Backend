@@ -10,6 +10,9 @@ use App\Http\Controllers\General\SponsorController as GeneralSponsor;
 use App\Http\Controllers\General\WorkshopController as GeneralWorkshop;
 use App\Http\Controllers\General\CommunityController as GeneralCommunity;
 use App\Http\Controllers\General\MentorController as GeneralMentor;
+use App\Http\Controllers\General\BadgeUserController as GeneralBadgeUser;
+use App\Http\Controllers\General\ComfecoEventController as GeneralComfecoEvent;
+use App\Http\Controllers\General\UserActivityController as GeneralUserActivity;
 
 /******* USER  *******/
 
@@ -57,5 +60,14 @@ Route::group([
         Route::get('showUserConnected/{id}', [User::class,'getUserConnected'])->name('usuario.show');
         Route::get('showAreas', [Area::class,'getAreas'])->name('area.show');
         Route::get('showCountries', [Country::class,'getCountries'])->name('country.show');
+
+        Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
+        Route::get('comfecoEvents', [GeneralComfecoEvent::class,'list'])->name('comfecoEvents.list');
+        Route::get('comfecoEvents/{comfecoEventId}', [GeneralComfecoEvent::class,'detail'])->name('comfecoEvents.detail');
+        Route::put('comfecoEvents/{comfecoEventId}/assign', [GeneralComfecoEvent::class,'attachToUser'])->name('comfecoEvents.attach');
+        Route::put('comfecoEvents/{comfecoEventId}/unassign', [GeneralComfecoEvent::class,'detachToUser'])->name('comfecoEvents.detach');
+        Route::get('users/comfecoEvents', [GeneralComfecoEvent::class,'listByUser'])->name('users.comfecoEvents');
+        Route::get('users/activities', [GeneralUserActivity::class,'listByUser'])->name('users.activities');
+        // Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
     });
 });
