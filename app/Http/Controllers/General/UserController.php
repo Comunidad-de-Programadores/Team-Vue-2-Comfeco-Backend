@@ -115,7 +115,6 @@ class UserController extends CustomController
             'error' => false,
             'message' => ''
         ];
-        
         try {
             $userData = $this->userRepository->updateProfile($user, $data);
             $response['message'] = 'Perfil actualizado correctamente';
