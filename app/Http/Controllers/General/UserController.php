@@ -92,6 +92,13 @@ class UserController extends CustomController
         return response()->json($response, $this->successStatus);
     }
 
+    public function getUser()
+    {
+        $user = $this->userRepository->generalFields(request()->user());
+        
+        return response()->json($user, $this->successStatus);
+    }
+
     public function updateProfile(UpdateProfileRequest $request)
     {
         $data = request()->only([

@@ -43,6 +43,7 @@ Route::group([
     Route::group([
         'middleware' => ['auth:api'],
     ], function () {
+        Route::get('user', [GeneralUser::class,'user'])->name('user');
         Route::put('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
 
         Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
