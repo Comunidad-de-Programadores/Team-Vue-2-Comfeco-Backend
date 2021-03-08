@@ -18,6 +18,7 @@ class RegisterRequest extends CustomFormRequest
             'email' => 'required|string|unique:users,email,'. null .',id,deleted_at,NULL',
             'password'=> 'required|required_with:password_confirmation|same:password_confirmation|min:6',
             'password_confirmation' => 'required|min:6',
+            'term_conditions' => 'required'
         ];
     }
 
@@ -38,6 +39,7 @@ class RegisterRequest extends CustomFormRequest
             'password.min' => 'Escriba al menos :min caracteres',
             'password_confirmation.required' => 'La confirmación de clave es obligatoria',
             'password_confirmation.min' => 'Escriba al menos :min caracteres',
+            'term_conditions' => 'Es obligatorio seleccionar los terminos y condiciones'
         ];
     }
 }

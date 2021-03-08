@@ -19,6 +19,7 @@ class CreateWorkshopsTable extends Migration
             $table->string('url_social')->nullable();
             $table->string('name_user')->nullable();
             $table->tinyInteger('area')->default(0);
+            $table->timestamp('fecha_curso');
             $table->tinyInteger('order')->default(0);
             $table->timestamps();
             $table->softDeletes();

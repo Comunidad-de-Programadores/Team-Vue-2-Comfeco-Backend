@@ -21,12 +21,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
- 
     public function setPasswordAttribute($pass)
     {
         $this->attributes['password'] = Hash::make($pass);
     }
-    
+
     public function hasRole($roles)
     {
         if (is_string($roles)) {
@@ -45,6 +44,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+        
     public function badges()
     {
         return $this->belongsToMany(Badge::class);

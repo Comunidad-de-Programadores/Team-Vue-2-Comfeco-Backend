@@ -36,4 +36,6 @@ class UpdateProfileRequest extends CustomFormRequest
             'biography.max' => 'Máximo son :max caracteres'
         ];
     }
+    
+    
 }

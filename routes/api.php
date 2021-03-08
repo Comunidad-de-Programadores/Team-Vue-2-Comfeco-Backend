@@ -14,6 +14,19 @@ use App\Http\Controllers\General\BadgeUserController as GeneralBadgeUser;
 use App\Http\Controllers\General\ComfecoEventController as GeneralComfecoEvent;
 use App\Http\Controllers\General\UserActivityController as GeneralUserActivity;
 
+/******* USER  *******/
+
+use App\Http\Controllers\User\UserController as User;
+
+/******* AREA  *******/
+
+use App\Http\Controllers\Area\AreaController as Area;
+
+/******* COUNTRY  *******/
+
+use App\Http\Controllers\Country\CountryController as Country;
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -45,6 +58,9 @@ Route::group([
     ], function () {
         Route::get('user', [GeneralUser::class,'user'])->name('user');
         Route::put('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
+        Route::get('showUserConnected/{id}', [User::class,'getUserConnected'])->name('usuario.show');
+        Route::get('showAreas', [Area::class,'getAreas'])->name('area.show');
+        Route::get('showCountries', [Country::class,'getCountries'])->name('country.show');
 
         Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
         Route::get('comfecoEvents', [GeneralComfecoEvent::class,'list'])->name('comfecoEvents.list');
