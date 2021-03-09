@@ -26,7 +26,6 @@ use App\Http\Controllers\Area\AreaController as Area;
 
 use App\Http\Controllers\Country\CountryController as Country;
 
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -56,11 +55,10 @@ Route::group([
     Route::group([
         'middleware' => ['auth:api'],
     ], function () {
-        Route::get('user', [GeneralUser::class,'user'])->name('user');
-        Route::put('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
-        Route::get('showUserConnected/{id}', [User::class,'getUserConnected'])->name('usuario.show');
-        Route::get('showAreas', [Area::class,'getAreas'])->name('area.show');
-        Route::get('showCountries', [Country::class,'getCountries'])->name('country.show');
+        Route::get('user', [GeneralUser::class,'getUser'])->name('user');
+        Route::get('getAreas', [Area::class,'getAreas'])->name('area.get');
+        Route::get('getCountries', [Country::class,'getCountries'])->name('country.get');
+        Route::post('updateProfile', [GeneralUser::class,'updateProfile'])->name('updateProfile');
 
         Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
         Route::get('comfecoEvents', [GeneralComfecoEvent::class,'list'])->name('comfecoEvents.list');
@@ -69,6 +67,6 @@ Route::group([
         Route::put('comfecoEvents/{comfecoEventId}/unassign', [GeneralComfecoEvent::class,'detachToUser'])->name('comfecoEvents.detach');
         Route::get('users/comfecoEvents', [GeneralComfecoEvent::class,'listByUser'])->name('users.comfecoEvents');
         Route::get('users/activities', [GeneralUserActivity::class,'listByUser'])->name('users.activities');
-        // Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
+        Route::get('users/badges', [GeneralBadgeUser::class,'getListAssigned'])->name('users.badges');
     });
 });

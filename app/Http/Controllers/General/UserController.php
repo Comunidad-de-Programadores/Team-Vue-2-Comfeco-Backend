@@ -131,6 +131,6 @@ class UserController extends CustomController
             $response['message'] = $th->getMessage();
         }
 
-        return response()->json($response, $response['error'] ? $this->successStatus : $this->errorStatus);
+        return response()->json($response, $response['error'] ? $this->errorStatus : $this->successStatus);
     }
 }

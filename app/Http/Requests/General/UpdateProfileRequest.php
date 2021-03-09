@@ -15,8 +15,8 @@ class UpdateProfileRequest extends CustomFormRequest
     {
         return [
             'email' => 'string|email|max:100',
-            'password'=> 'required_with:password_confirmation|min:6',
-            'password_confirmation'=> 'required_with:password|same:password|min:6',
+            'password'=> 'nullable|required_with:password_confirmation|min:6',
+            'password_confirmation'=> 'nullable|required_with:password|same:password|min:6',
             'birthday' => 'date_format:d/m/Y',
             'biography' => 'max:140'
         ];
@@ -36,6 +36,4 @@ class UpdateProfileRequest extends CustomFormRequest
             'biography.max' => 'Máximo son :max caracteres'
         ];
     }
-    
-    
 }

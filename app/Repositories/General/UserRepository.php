@@ -35,6 +35,10 @@ class UserRepository
             $data['birthday'] = date('Y-m-d', strtotime(\str_replace('/', '-', $data["birthday"])));
         }
 
+        if (isset($data['password']) && (is_null($data["password"]) || ($data["password"] == ""))) {
+            unset($data['password']);
+        }
+
         if (isset($data['avatar']) && !is_null($data["avatar"])) {
             $file = $data['avatar'];
             if (strpos($file, 'base64') !== false) {
@@ -44,8 +48,8 @@ class UserRepository
                     $file = base64_decode($file);
                     $this->manageFile64($user, $file, 'avatar', 'public', 'users');
                 }
-                unset($data['avatar']);
             }
+            unset($data['avatar']);
         }
 
         $user->update($data);
@@ -67,8 +71,8 @@ class UserRepository
         $user->recover_expiration_time = date("Y-m-d H:i:s", strtotime('+24 hours'));
         $user->update();
 
-        $linkToRecoverPassword = "https://comfeco.tk/recuperarClave?email=" . encrypt($user->email);
-        $linkToCancelRecoverPassword = "https://comfeco.tk/anularRecuperarClave?email=" . encrypt($user->email);
+        $linkToRecoverPassword = env("APP_FRONTEND_URL") . "/recuperarClave/" . encrypt($user->email);
+        $linkToCancelRecoverPassword = env("APP_FRONTEND_URL") . "/anularRecuperarClave/" . encrypt($user->email);
 
         Mail::to($user->email)->queue(new RecoverPasswordMail($linkToRecoverPassword, $linkToCancelRecoverPassword));
 
