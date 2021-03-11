@@ -45,6 +45,14 @@ class ComfecoEventController extends CustomController
             return response()->json($response, $this->errorStatus);
         }
 
+        if ($this->comfecoEventRepository->checkItWasRegistered($user, $comfecoEventId)) {
+            $response = [
+                "error" => true,
+                "message" => "El usuario ya estuvo registrado en este evento y ya no puede inscribirse nuevamente"
+            ];
+            return response()->json($response, $this->errorStatus);
+        }
+
         try {
             $this->comfecoEventRepository->attachEventToUser($user, $comfecoEventId);
             $response = [
@@ -64,7 +72,10 @@ class ComfecoEventController extends CustomController
     public function detachToUser($comfecoEventId)
     {
         $user = request()->user();
-        if (!$this->comfecoEventRepository->checkIsAttach($user, $comfecoEventId)) {
+        if (
+            !$this->comfecoEventRepository->checkIsAttach($user, $comfecoEventId) ||
+            $this->comfecoEventRepository->checkItWasRegistered($user, $comfecoEventId)
+        ) {
             $response = [
                 "error" => true,
                 "message" => "El usuario ya no tiene asignado este evento"
