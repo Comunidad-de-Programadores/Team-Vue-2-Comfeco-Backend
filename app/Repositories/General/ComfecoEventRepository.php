@@ -10,6 +10,7 @@ class ComfecoEventRepository
     public function list()
     {
         $storageUrl = asset('storage/');
+        $user = request()->user();
         DB::statement(DB::raw("SET @storageUrl = '${storageUrl}'"));
         $records = ComfecoEvent::selectRaw("
                             id,
@@ -32,6 +33,10 @@ class ComfecoEventRepository
                             external_url,
                             `order`
                         ")
+                        ->withCount(['users' => static function ($query) use ($user) {
+                            $query->where('users.id', $user->id);
+                            $query->where('comfeco_event_user.already_registered', false);
+                        }])
                         ->whereIsVisible(1)
                         ->get();
 
@@ -117,8 +122,10 @@ class ComfecoEventRepository
     public function checkItWasRegistered($user, $comfecoEventId)
     {
         $comfectoEvent = $user->comfecoEvents()
+                            ->where('comfeco_events.id', $comfecoEventId)
                             ->where('comfeco_event_user.already_registered', true)
                             ->first();
+
         return !is_null($comfectoEvent);
     }
 
