@@ -10,6 +10,7 @@ use App\Http\Requests\General\RecoverPasswordRequest;
 use App\Http\Requests\General\CancelRecoverPasswordRequest;
 use App\Http\Requests\General\GeneratePasswordRequest;
 use App\Http\Requests\General\UpdateProfileRequest;
+use App\Http\Requests\User\UserRequest;
 
 class UserController extends CustomController
 {

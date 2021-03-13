@@ -14,7 +14,7 @@ class UserAssignBadgeDemo extends Seeder
      */
     public function run()
     {
-        $user = User::where('email', 'ggalvez92@hotmail.com')->first();
+        $user = User::where('email', 'luis5771@hotmail.com')->first();
 
         if (!is_null($user)) {
             $user->badges()->sync([1,2,3,4,5]);

@@ -26,7 +26,6 @@ class LoginController extends CustomController
         $user = request()->user();
         $rememberMe = request('rememberMe', false);
         $token = $userRepository->createToken($user, $rememberMe);
-        
         $userFormatted = $userRepository->generalFields($user);
         $userFormatted = (object) array_merge((array) $userFormatted, (array) $token);
 
