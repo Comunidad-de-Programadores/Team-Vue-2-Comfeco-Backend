@@ -18,7 +18,8 @@ class BadgeRepository
             ELSE
                 CONCAT(@storageUrl,'/',badges.image_url)
             END as image_url,
-            description
+            description,
+            how_win
         ")->paginate($perPage);
 
         return $badges;
