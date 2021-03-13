@@ -51,6 +51,18 @@ class BadgesSeeder extends Seeder
                 'description' => 'Debes superar el nivel de node',
                 'order' => 1
             ],
+            [
+                'name' => 'Login',
+                'image_url' => 'badges/login.png',
+                'description' => 'Debes realizar tu primer login para obtener la medalla',
+                'order' => 1
+            ],
+            [
+                'name' => 'Update',
+                'image_url' => 'badges/update.png',
+                'description' => 'Debes actualizar tu perfil, para obtener esta medalla',
+                'order' => 1
+            ],
         ];
 
         foreach ($models as $key => $model) {

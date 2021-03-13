@@ -62,7 +62,7 @@ class UserRepository
     private function validateBadgeUpdateProfile($user){        
         $updateBadge = DB::table('badge_user')
             ->where('user_id', '=', $user->id)
-            ->where('badge_id', '=', 9)
+            ->where('badge_id', '=', 8)
             ->select(DB::raw('count(*) as `update`'))
             ->get()[0];
 
@@ -72,7 +72,7 @@ class UserRepository
     private function validateBadgeLogin($user){
         $loginBadge = DB::table('badge_user')
             ->where('user_id', '=', $user->id)
-            ->where('badge_id', '=', 8)
+            ->where('badge_id', '=', 7)
             ->select(DB::raw('count(*) as login'))
             ->get()[0];
 
