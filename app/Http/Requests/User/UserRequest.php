@@ -3,12 +3,20 @@
 
 namespace App\Http\Requests\User;
 
+use App\Http\Controllers\CustomController;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserRequest extends FormRequest
 {
+    private $customController;
+
+    public function __construct()
+    {
+      $this->customController = new CustomController;
+    }
+
     public function authorize()
     {
         return true;
@@ -33,6 +41,6 @@ class UserRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             "error" => true,
             "errors" => $validator->errors()
-        ], 200));
+        ], $this->customController->errorStatus));
     }
 }

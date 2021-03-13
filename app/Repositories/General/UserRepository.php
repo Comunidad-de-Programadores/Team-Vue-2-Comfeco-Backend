@@ -50,11 +50,33 @@ class UserRepository
                 }
             }
             unset($data['avatar']);
-        }
+        }        
 
         $user->update($data);
 
-        return $this->generalFields($user);
+        $this->validateBadgeUpdateProfile($user);
+
+        return $this->generalFields($user, true);
+    }
+
+    private function validateBadgeUpdateProfile($user){        
+        $updateBadge = DB::table('badge_user')
+            ->where('user_id', '=', $user->id)
+            ->where('badge_id', '=', 9)
+            ->select(DB::raw('count(*) as `update`'))
+            ->get()[0];
+
+        $updateBadge->update === 0 && ($user->badges()->sync(9));
+    }
+
+    private function validateBadgeLogin($user){
+        $loginBadge = DB::table('badge_user')
+            ->where('user_id', '=', $user->id)
+            ->where('badge_id', '=', 8)
+            ->select(DB::raw('count(*) as login'))
+            ->get()[0];
+
+        $loginBadge->login === 0 && ($user->badges()->sync([8]));
     }
 
     public function recoverPassword($email)
@@ -159,8 +181,10 @@ class UserRepository
             "twitter_url",
             "linkedin_url",
         ]);
-
+        
         $auxUser['avatar'] = strpos($auxUser['avatar'], 'users/') !== false ? asset('storage/'. $auxUser['avatar']) : $auxUser['avatar'] ;
+
+        $this->validateBadgeLogin($user);
 
         return $auxUser;
     }
