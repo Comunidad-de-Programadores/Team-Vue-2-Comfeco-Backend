@@ -52,7 +52,7 @@ Route::group([
         Route::get('communities', [GeneralCommunity::class,'list'])->name('communities.list');
         Route::get('communities/{id}', [GeneralCommunity::class,'detail'])->name('communities.detail');
         Route::get('mentors', [GeneralMentor::class,'list'])->name('mentors.list');
-        Route::get('badges', [ Badge::class,'getBadges' ])->name('badges');
+        
     });
 
     Route::group([

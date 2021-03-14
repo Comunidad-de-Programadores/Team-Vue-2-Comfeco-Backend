@@ -13,18 +13,25 @@ class BadgeUserRepository
     {
         $storageUrl = asset('storage/');
         DB::statement(DB::raw("SET @storageUrl = '${storageUrl}'"));
-        $badgesAssigned = $user->badges()
-                            ->selectRaw("
-                                badges.id,
-                                badges.name,
-                                CASE WHEN badges.image_url IS NULL 
-                                    THEN ''
-                                ELSE
-                                    CONCAT(@storageUrl,'/',badges.image_url)
-                                END as image_url,
-                                description
-                            ")
-                            ->get();
+
+        $badgesAssigned = DB::table('badges')
+        ->leftJoin('badge_user', function($join) use ($user){
+            $join->on('badges.id', '=', 'badge_user.badge_id')
+                ->where('badge_user.user_id','=',$user->id);
+        })
+        ->selectRaw("
+            badges.id,
+            badges.name,
+            CASE WHEN badges.image_url IS NULL 
+                THEN ''
+            ELSE
+                CONCAT(@storageUrl,'/',badges.image_url)
+            END as image_url,
+            badges.description,
+            badges.how_win,
+            case when badge_user.id is null then false 
+            else true end as have_badge        
+        ")->paginate(5);      
 
         return $badgesAssigned;
     }
