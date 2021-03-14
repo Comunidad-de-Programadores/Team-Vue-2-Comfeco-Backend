@@ -28,6 +28,8 @@ use App\Http\Controllers\Country\CountryController as Country;
 /******* BADGE  *******/
 
 use App\Http\Controllers\Badge\BadgeController as Badge;
+use App\Http\Controllers\Technology\TechnologyController;
+use App\Http\Controllers\Team\TeamController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -53,6 +55,8 @@ Route::group([
         Route::get('communities/{id}', [GeneralCommunity::class,'detail'])->name('communities.detail');
         Route::get('mentors', [GeneralMentor::class,'list'])->name('mentors.list');
         Route::get('badges', [ Badge::class,'getBadges' ])->name('badges');
+        Route::apiResource('teams', TeamController::class)->only(['index']);
+        Route::apiResource('technologies', TechnologyController::class)->only(['index']);
     });
 
     Route::group([
@@ -73,6 +77,9 @@ Route::group([
 
         Route::post('createBadge', [GeneralBadgeUser::class,'store'])->name('store');
         Route::post('updateBadge', [GeneralBadgeUser::class,'updateBadge'])->name('update');
-    
+
+        Route::get('teams/me', [ TeamController::class,'currentTeam' ])->name('current_team');
+        Route::delete('teams/me', [ TeamController::class,'leaveTeam' ])->name('current_team');
+        Route::post('teams/{id}/members', [ TeamController::class,'joinTeam' ])->name('join_team');
     });
 });

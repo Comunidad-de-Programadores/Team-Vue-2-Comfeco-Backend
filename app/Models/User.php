@@ -53,7 +53,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Country::class);
     }
-        
+
     public function badges()
     {
         return $this->belongsToMany(Badge::class);
@@ -67,5 +67,10 @@ class User extends Authenticatable
     public function userActivities()
     {
         return $this->hasMany(UserActivity::class);
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }
