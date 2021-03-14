@@ -61,7 +61,8 @@ class User extends Authenticatable
 
     public function comfecoEvents()
     {
-        return $this->belongsToMany(ComfecoEvent::class);
+        return $this->belongsToMany(ComfecoEvent::class)
+                    ->withPivot('already_registered');
     }
 
     public function userActivities()

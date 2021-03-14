@@ -10,6 +10,7 @@ class ComfecoEventRepository
     public function list()
     {
         $storageUrl = asset('storage/');
+        $user = request()->user();
         DB::statement(DB::raw("SET @storageUrl = '${storageUrl}'"));
         $records = ComfecoEvent::selectRaw("
                             id,
@@ -32,6 +33,10 @@ class ComfecoEventRepository
                             external_url,
                             `order`
                         ")
+                        ->withCount(['users' => static function ($query) use ($user) {
+                            $query->where('users.id', $user->id);
+                            $query->where('comfeco_event_user.already_registered', false);
+                        }])
                         ->whereIsVisible(1)
                         ->get();
 
@@ -66,6 +71,7 @@ class ComfecoEventRepository
                         ->whereIsVisible(1)
                         ->whereHas('users', function ($query) use ($userId) {
                             $query->whereIn('users.id', [$userId]);
+                            $query->where('comfeco_event_user.already_registered', false);
                         })
                         ->get();
 
@@ -106,17 +112,30 @@ class ComfecoEventRepository
 
     public function checkIsAttach($user, $comfecoEventId)
     {
-        $comfectoEvent = $user->comfecoEvents()->where('comfeco_events.id', $comfecoEventId)->first();
+        $comfectoEvent = $user->comfecoEvents()
+                            ->where('comfeco_events.id', $comfecoEventId)
+                            ->where('comfeco_event_user.already_registered', false)
+                            ->first();
+        return !is_null($comfectoEvent);
+    }
+
+    public function checkItWasRegistered($user, $comfecoEventId)
+    {
+        $comfectoEvent = $user->comfecoEvents()
+                            ->where('comfeco_events.id', $comfecoEventId)
+                            ->where('comfeco_event_user.already_registered', true)
+                            ->first();
+
         return !is_null($comfectoEvent);
     }
 
     public function attachEventToUser($user, $comfecoEventId)
     {
-        $user->comfecoEvents()->attach($comfecoEventId);
+        $user->comfecoEvents()->attach($comfecoEventId, ['already_registered' => 0]);
     }
 
     public function detachEventToUser($user, $comfecoEventId)
     {
-        $user->comfecoEvents()->detach($comfecoEventId);
+        $user->comfecoEvents()->updateExistingPivot($comfecoEventId, ['already_registered' => 1]);
     }
 }
