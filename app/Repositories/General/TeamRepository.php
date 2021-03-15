@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Auth;
 class TeamRepository
 {
     public function getTeams(){
-        $teams = Team::all();
+        $teams = Team::with('technology')
+        ->withCount('members')
+        ->get();
 
         return $teams;
     }

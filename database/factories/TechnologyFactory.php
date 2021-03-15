@@ -22,9 +22,11 @@ class TechnologyFactory extends Factory
     public function definition()
     {
         $availableTechnologies = ["Javascript", "Typescript"];
+        $colors = ["blue", "yellow"];
         return [
             "name" => $this->faker->unique()->randomElement($availableTechnologies),
-            "description" => $this->faker->text(100)
+            "description" => $this->faker->text(100),
+            "color" => $this->faker->randomElement($colors)
         ];
     }
 }

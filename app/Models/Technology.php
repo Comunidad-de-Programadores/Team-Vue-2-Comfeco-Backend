@@ -11,4 +11,9 @@ class Technology extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
 }

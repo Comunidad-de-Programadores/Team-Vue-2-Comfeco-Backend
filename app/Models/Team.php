@@ -16,4 +16,9 @@ class Team extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function technology()
+    {
+        return $this->belongsTo(Technology::class);
+    }
 }
