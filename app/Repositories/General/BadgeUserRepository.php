@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories\General;
+
 use App\Models\Badge;
 use Illuminate\Support\Facades\DB;
 use App\Traits\FileMethods;
@@ -15,9 +16,9 @@ class BadgeUserRepository
         DB::statement(DB::raw("SET @storageUrl = '${storageUrl}'"));
 
         $badgesAssigned = DB::table('badges')
-        ->leftJoin('badge_user', function($join) use ($user){
+        ->leftJoin('badge_user', function ($join) use ($user) {
             $join->on('badges.id', '=', 'badge_user.badge_id')
-                ->where('badge_user.user_id','=',$user->id);
+                ->where('badge_user.user_id', '=', $user->id);
         })
         ->selectRaw("
             badges.id,
@@ -31,12 +32,13 @@ class BadgeUserRepository
             badges.how_win,
             case when badge_user.id is null then false 
             else true end as have_badge        
-        ")->paginate(5);      
+        ")->get();
 
         return $badgesAssigned;
     }
 
-    public function store($badge){
+    public function store($badge)
+    {
         $image = $badge['image_url'];
         unset($badge['image_url']);
 
