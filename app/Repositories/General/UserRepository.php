@@ -193,7 +193,8 @@ class UserRepository
             "linkedin_url",
         ]);
         
-        $auxUser['avatar'] = strpos($auxUser['avatar'], 'users/') !== false ? asset('storage/'. $auxUser['avatar']) : $auxUser['avatar'] ;
+        $auxUser['avatar'] = is_null($auxUser['avatar']) ? asset('images/user-default.png') : (strpos($auxUser['avatar'], 'users/') !== false ? asset('storage/'. $auxUser['avatar']) : $auxUser['avatar']) ;
+        
 
         $this->validateBadgeLogin($user);
 
