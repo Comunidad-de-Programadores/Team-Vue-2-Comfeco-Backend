@@ -67,7 +67,7 @@ class UserRepository
             ->select(DB::raw('count(*) as `update`'))
             ->get()[0];
 
-        $updateBadge->update === 0 && ($user->badges()->sync(9));
+        $updateBadge->update === 0 && ($user->badges()->attach([8]));
     }
 
     private function validateBadgeLogin($user)
@@ -78,7 +78,7 @@ class UserRepository
             ->select(DB::raw('count(*) as login'))
             ->get()[0];
 
-        $loginBadge->login === 0 && ($user->badges()->sync([8]));
+        $loginBadge->login === 0 && ($user->badges()->attach([7]));
     }
 
     public function recoverPassword($email)

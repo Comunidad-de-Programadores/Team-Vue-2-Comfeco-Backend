@@ -32,7 +32,9 @@ class BadgeUserRepository
             badges.how_win,
             case when badge_user.id is null then false 
             else true end as have_badge        
-        ")->get();
+        ")
+        ->orderBy('have_badge', 'desc')
+        ->get();
 
         return $badgesAssigned;
     }
