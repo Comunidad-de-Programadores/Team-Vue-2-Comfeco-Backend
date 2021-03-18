@@ -15,10 +15,11 @@ class RegisterRequest extends CustomFormRequest
     {
         return [
             'name' => 'required|string|min:6|max:100',
+            'nickname' => 'required|min:3|max:100',
             'email' => 'required|string|unique:users,email,'. null .',id,deleted_at,NULL',
             'password'=> 'required|required_with:password_confirmation|same:password_confirmation|min:6',
             'password_confirmation' => 'required|min:6',
-            'term_conditions' => 'required'
+            'term_conditions' => 'accepted'
         ];
     }
 
@@ -29,6 +30,9 @@ class RegisterRequest extends CustomFormRequest
             'name.string' => 'Escriba un nombre válido',
             'name.min' => 'Escriba su nombre completo',
             'name.max' => 'Escriba máximo :max caracteres',
+            'nickname.required' => 'El nickname es obligatorio',
+            'nickname.min' => 'Escriba su nombre completo',
+            'nickname.max' => 'Escriba máximo :max caracteres',
             'email.required' => 'El correo es obligatorio',
             'email.unique' => 'Este correo ya está siendo usado',
             'email.email' => 'Escriba un correo válido',
@@ -39,7 +43,7 @@ class RegisterRequest extends CustomFormRequest
             'password.min' => 'Escriba al menos :min caracteres',
             'password_confirmation.required' => 'La confirmación de clave es obligatoria',
             'password_confirmation.min' => 'Escriba al menos :min caracteres',
-            'term_conditions' => 'Es obligatorio seleccionar los terminos y condiciones'
+            'term_conditions.accepted' => 'Es obligatorio aceptar los terminos y condiciones'
         ];
     }
 }

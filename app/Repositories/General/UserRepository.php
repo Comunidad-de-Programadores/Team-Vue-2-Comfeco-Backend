@@ -50,7 +50,7 @@ class UserRepository
                 }
             }
             unset($data['avatar']);
-        }        
+        }
 
         $user->update($data);
 
@@ -59,7 +59,8 @@ class UserRepository
         return $this->generalFields($user, true);
     }
 
-    private function validateBadgeUpdateProfile($user){        
+    private function validateBadgeUpdateProfile($user)
+    {
         $updateBadge = DB::table('badge_user')
             ->where('user_id', '=', $user->id)
             ->where('badge_id', '=', 8)
@@ -69,7 +70,8 @@ class UserRepository
         $updateBadge->update === 0 && ($user->badges()->sync(9));
     }
 
-    private function validateBadgeLogin($user){
+    private function validateBadgeLogin($user)
+    {
         $loginBadge = DB::table('badge_user')
             ->where('user_id', '=', $user->id)
             ->where('badge_id', '=', 7)
@@ -111,6 +113,13 @@ class UserRepository
             ];
         }
 
+        if (is_null($user->recover_expiration_time) && $user->recover_password_flag == 0) {
+            return [
+                "error" => true,
+                "errors" => 'Inválido'
+            ];
+        }
+
         $expiration_time = strtotime($user->recover_expiration_time);
         $current_time = time();
         $expirationFlag = $current_time <= $expiration_time;
@@ -132,6 +141,7 @@ class UserRepository
         }
 
         $user->recover_password_flag = false;
+        $user->recover_expiration_time = null;
         $user->update();
 
         Mail::to($user->email)->queue(new CancelRecoverPasswordMail());
@@ -148,6 +158,7 @@ class UserRepository
 
         $user->password = $password;
         $user->recover_password_flag = false;
+        $user->recover_expiration_time = null;
         $user->update();
     }
 
