@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Repositories\General;
+
 use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 
 class TeamRepository
 {
-    public function getTeams(){
+    public function getTeams()
+    {
         $teams = Team::with('technology')
         ->withCount('members')
         ->get();
@@ -14,8 +16,8 @@ class TeamRepository
         return $teams;
     }
 
-    public function getCurrentTeam(){
-
+    public function getCurrentTeam()
+    {
         $team = Auth::user()->team()->with('members')->first();
 
         return $team;

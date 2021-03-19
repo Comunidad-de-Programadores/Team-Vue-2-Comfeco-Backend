@@ -18,7 +18,8 @@ class UserActivityRepository
                                 THEN ''
                             ELSE
                                 CONCAT(@storageUrl,'/',image_url)
-                            END as image_url
+                            END as image_url,
+                            DATE_FORMAT(created_at,'%e/%m/%Y') as created
                         ")
                         ->where('user_id', $userId)
                         ->orderBy('id', 'desc')

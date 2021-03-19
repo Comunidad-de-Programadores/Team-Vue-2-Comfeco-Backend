@@ -69,7 +69,7 @@ class UserRepository
             ->select(DB::raw('count(*) as `update`'))
             ->get()[0];
 
-        $updateBadge->update === 0 && ($user->badges()->attach([8]));
+        $updateBadge->update === 0 && ($user->badges()->attach($badge->id));
     }
 
     public function recoverPassword($email)
