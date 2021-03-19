@@ -73,7 +73,7 @@ class BadgeUserObserver
         $badge = $badgeUser->badge()->first();
         return [
             "user_id" => $badgeUser->user_id,
-            "activity" => 'Gano la insignia ' . $badge->name
+            "activity" => 'Ganó la insignia ' . $badge->name
         ];
     }
 }
