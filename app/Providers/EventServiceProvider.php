@@ -6,6 +6,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Models\ComfecoEventUser;
+use App\Observers\ComfecoEventUserObserver;
+use App\Models\BadgeUser;
+use App\Observers\BadgeUserObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        ComfecoEventUser::observe(ComfecoEventUserObserver::class);
+        BadgeUser::observe(BadgeUserObserver::class);
     }
 }

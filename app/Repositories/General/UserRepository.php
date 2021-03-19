@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Models\Badge;
 use App\Mail\RecoverPasswordMail;
 use App\Mail\CancelRecoverPasswordMail;
 use App\Repositories\RoleRepository;
@@ -61,24 +62,14 @@ class UserRepository
 
     private function validateBadgeUpdateProfile($user)
     {
+        $badge = Badge::where('name', 'Sociable')->select('id')->first();
         $updateBadge = DB::table('badge_user')
             ->where('user_id', '=', $user->id)
-            ->where('badge_id', '=', 8)
+            ->where('badge_id', '=', $badge->id)
             ->select(DB::raw('count(*) as `update`'))
             ->get()[0];
 
         $updateBadge->update === 0 && ($user->badges()->attach([8]));
-    }
-
-    private function validateBadgeLogin($user)
-    {
-        $loginBadge = DB::table('badge_user')
-            ->where('user_id', '=', $user->id)
-            ->where('badge_id', '=', 7)
-            ->select(DB::raw('count(*) as login'))
-            ->get()[0];
-
-        $loginBadge->login === 0 && ($user->badges()->attach([7]));
     }
 
     public function recoverPassword($email)
@@ -195,9 +186,6 @@ class UserRepository
         
         $auxUser['avatar'] = is_null($auxUser['avatar']) ? asset('images/user-default.png') : (strpos($auxUser['avatar'], 'users/') !== false ? asset('storage/'. $auxUser['avatar']) : $auxUser['avatar']) ;
         
-
-        $this->validateBadgeLogin($user);
-
         return $auxUser;
     }
 

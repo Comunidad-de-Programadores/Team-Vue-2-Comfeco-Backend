@@ -56,13 +56,15 @@ class User extends Authenticatable
 
     public function badges()
     {
-        return $this->belongsToMany(Badge::class);
+        return $this->belongsToMany(Badge::class)
+                    ->using(BadgeUser::class);
     }
 
     public function comfecoEvents()
     {
         return $this->belongsToMany(ComfecoEvent::class)
-                    ->withPivot('already_registered');
+                    ->withPivot('already_registered')
+                    ->using(ComfecoEventUser::class);
     }
 
     public function userActivities()
