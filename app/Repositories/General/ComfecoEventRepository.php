@@ -38,6 +38,7 @@ class ComfecoEventRepository
                             $query->where('comfeco_event_user.already_registered', false);
                         }])
                         ->whereIsVisible(1)
+                        ->orderBy('start')
                         ->get();
 
         return $records;
