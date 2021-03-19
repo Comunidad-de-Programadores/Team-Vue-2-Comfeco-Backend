@@ -5,6 +5,7 @@ namespace App\Http\Controllers\General;
 use App\Http\Controllers\CustomController;
 use Illuminate\Http\Request;
 use App\Repositories\General\UserRepository;
+use App\Repositories\General\UserActivityRepository;
 use App\Http\Requests\General\RegisterRequest;
 use App\Http\Requests\General\RecoverPasswordRequest;
 use App\Http\Requests\General\CancelRecoverPasswordRequest;
@@ -15,11 +16,13 @@ use App\Http\Requests\User\UserRequest;
 class UserController extends CustomController
 {
     protected $userRepository;
+    protected $userActivityRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, UserActivityRepository $userActivityRepository)
     {
         parent::__construct();
         $this->userRepository = $userRepository;
+        $this->userActivityRepository = $userActivityRepository;
     }
 
     public function store(RegisterRequest $request)
@@ -28,19 +31,32 @@ class UserController extends CustomController
 
         try {
             $user = $this->userRepository->store($fields);
-            $token = $this->userRepository->createToken($user);
+
+            $this->userActivityRepository->store(
+                array(
+                    'activity' => 'Insertando usuario manual'
+                ),
+                $user['id']
+            );
+
+            $token = $this->userRepository->createToken($user);     
+
             $userFormatted = $this->userRepository->generalFields($user);
+
             $userFormatted = (object) array_merge((array) $userFormatted, (array) $token);
+
             $response = [
                 "error" => false,
                 "user" => $userFormatted
             ];
+
             return response()->json($response, $this->successStatus);
         } catch (\Throwable $th) {
             $response = [
                 "error" => true,
-                "messages" => [ "Error, contáctese con soporte técnico." ]
+                "messages" => [ "Error, contáctese con soporte técnico.", $th ]
             ];
+
             return response()->json($response, $this->errorStatus);
         }
     }

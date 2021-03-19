@@ -26,4 +26,19 @@ class UserActivityRepository
 
         return $records;
     }
+
+    public function store($data, $user_id)
+    {
+        try {
+            $userActivity = new UserActivity;
+                $userActivity->user_id = $user_id;
+                $userActivity->activity = $data['activity'];
+            $userActivity->save();
+
+            //Probe con DB::insert y nada xD
+            
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
